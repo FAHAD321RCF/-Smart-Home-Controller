@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Home Controller</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Smart Home Controller</h1>
+
+    <div>
+        <button onclick="turnOnLED()">Turn On Light</button>
+        <button onclick="turnOffLED()">Turn Off Light</button>
+    </div>
+
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        function turnOnLED() {
+            socket.emit('turn_on_led');  // Send event to server to turn on LED
+        }
+
+        function turnOffLED() {
+            socket.emit('turn_off_led');  // Send event to server to turn off LED
+        }
+    </script>
+</body>
+</html>
