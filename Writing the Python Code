@@ -1,0 +1,32 @@
+from flask import Flask, render_template
+from flask_socketio import SocketIO
+import RPi.GPIO as GPIO
+
+# Set up GPIO
+GPIO.setmode(GPIO.BCM)
+LED_PIN = 17  # GPIO pin for LED
+GPIO.setup(LED_PIN, GPIO.OUT)
+
+app = Flask(__name__)
+socketio = SocketIO(app)
+
+# Index route to serve the main page
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# WebSocket event for turning LED on
+@socketio.on('turn_on_led')
+def turn_on_led():
+    GPIO.output(LED_PIN, GPIO.HIGH)  # Turn LED on
+
+# WebSocket event for turning LED off
+@socketio.on('turn_off_led')
+def turn_off_led():
+    GPIO.output(LED_PIN, GPIO.LOW)  # Turn LED off
+
+if __name__ == '__main__':
+    try:
+        socketio.run(app, host='0.0.0.0', port=5000)
+    except KeyboardInterrupt:
+        GPIO.cleanup()  # Clean up GPIO on exit
