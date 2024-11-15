@@ -1,0 +1,5 @@
+//Run the Flask App
+python3 app.py
+//Access the Web App
+http://<raspberry-pi-ip-address>:5000
+
