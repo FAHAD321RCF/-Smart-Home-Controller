@@ -1,0 +1,16 @@
+<div>
+    <button onclick="getTemperature()">Get Temperature</button>
+    <p id="temperature">Temperature: --</p>
+</div>
+
+<script>
+    // Get temperature
+    function getTemperature() {
+        socket.emit('get_temperature');
+    }
+
+    // Listen for temperature updates
+    socket.on('temperature_update', function(data) {
+        document.getElementById('temperature').innerHTML = 'Temperature: ' + data.temperature + '°C';
+    });
+</script>
